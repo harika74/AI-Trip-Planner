@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generative AI Trip Planner</title>
+</head>
+<body>
+    <h1>AI Trip Planner</h1>
+    <form method="POST">
+        <label for="city">Enter city:</label>
+        <input type="text" id="city" name="city" value="{{ city }}" required>
+
+        <label for="category">Select category:</label>
+        <select id="category" name="category" required>
+            <option value="" {% if not category %}selected{% endif %}>Choose one</option>
+            <option value="historical" {% if category == "historical" %}selected{% endif %}>Historical Places</option>
+            <option value="parks" {% if category == "parks" %}selected{% endif %}>Parks</option>
+            <option value="food" {% if category == "food" %}selected{% endif %}>Food Joints</option>
+            <option value="museums" {% if category == "museums" %}selected{% endif %}>Museums</option>
+            <option value="temples" {% if category == "temples" %}selected{% endif %}>Temples</option>
+        </select>
+        <button type="submit">Get Places</button>
+        
+        {% if places %}
+        <br><label for="place">Select a place:</label>
+        <select id="place" name="place" required>
+            <option value="" selected>Select place</option>
+            {% for place in places %}
+            <option value="{{ place }}">{{ place }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Get Itinerary</button>
+        {% endif %}
+    </form>
+
+    {% if itinerary %}
+    <hr>
+    <h2>Itinerary for {{ selected_place }} in {{ city }}</h2>
+    <pre>{{ itinerary }}</pre>
+    {% endif %}
+</body>
+</html>
